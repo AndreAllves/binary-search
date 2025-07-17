@@ -19,7 +19,7 @@ public class LastOccorrence {
                     result = fooc(array, x, m+1, rightIndex);
                 }
             }
-            else if (array[m] >= x){
+            else if (array[m] > x){
                 result = fooc(array, x, leftIndex, m-1);
             }
             else{
