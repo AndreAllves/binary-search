@@ -12,8 +12,15 @@ public class MostNearWithoutBeFloorOrCeil {
         if(v != null && v.length > 0 && x > 0 && leftIndex >= 0 && rightIndex < v.length && leftIndex <= rightIndex){
             int m = (leftIndex + rightIndex) / 2;
 
-            int difM = diference(v[m], x);
-            int difS = diference(bestSoFar, x);
+            int difM = v[m] - x;
+            if(difM < 0){
+                difM = -difM;
+            }
+            
+            int difS = bestSoFar - x;
+            if(difS < 0){
+                difM = -difS;
+            }
 
             if(difM < difS || (difM == difS && v[m] < bestSoFar)){
                 result = v[m];
@@ -28,15 +35,6 @@ public class MostNearWithoutBeFloorOrCeil {
         return result;
     }
 
-    private int diference(int a, int b){
-        int dif = a - b;
-
-        if(dif < 0){
-            dif = -dif;
-        }
-
-        return dif;
-    }
 
     public static void main(String[] args) {
         MostNearWithoutBeFloorOrCeil m = new MostNearWithoutBeFloorOrCeil();
