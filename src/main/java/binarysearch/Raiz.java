@@ -15,7 +15,7 @@ public class Raiz {
         int middle = (leftIndex+rightIndex)/2;
         int pow = pow(middle, raiz);
 
-        if(abs(pow-numero) <= erro){
+        if(abs(pow-numero) < erro){
             result = middle;
         }
         else if(pow > numero){

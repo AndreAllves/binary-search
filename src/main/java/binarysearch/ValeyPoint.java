@@ -1,39 +1,60 @@
 package binarysearch;
 
 
-public class ValeyPoint {
+public class ValeyPoint<T extends Comparable<T>> {
     
-    public int valeyPoint(int [] array){
-        return  valeyPoint(array, 0, array.length - 1);
+     public int valeyPoint(Integer [] array){
+        int result = -1;
+
+        if(array != null){
+            result = valeyPointRecursive(array, 0, array.length-1);
+        }
+        return result;
     }
 
-    private int valeyPoint(int [] array, int leftIndex, int rightIndex){
-        int result = 0;
+    private int valeyPointRecursive(Integer[] array, int left, int right){
+        int result = -1;
 
-        if(array != null && array.length > 0 && leftIndex >= 0 && rightIndex < array.length && leftIndex <= rightIndex){
-            int m = (leftIndex + rightIndex) / 2;
+        if(left <= right && left >= 0 && right < array.length){
+            int m = (left+right)/2;
 
-            boolean isFirst = (m == 0);
-            boolean isLast = (m == array.length - 1);
-
-            boolean leftIsBigger = isFirst || array[m] < array[m-1];
-            boolean rightIsBigger = isLast || array[m] < array[m+1];
-
-            if(leftIsBigger && rightIsBigger){
-                result = array[m];
+            if(m == 0){
+                if(m == array.length - 1 || array[m].compareTo(array[m+1]) < 0){
+                    result = array[m];
+                }
+                else{
+                    result = valeyPointRecursive(array, m+1, right);
+                }
             }
-            else if (!leftIsBigger){
-                result = valeyPoint(array, leftIndex, m-1);
+            else if(m == array.length-1){
+                if(array[m].compareTo(array[m-1]) < 0){
+                    result = array[m];
+                }
+                else{
+                    result = valeyPointRecursive(array, left, m-1);
+                }
             }
             else{
-                result = valeyPoint(array, m+1, rightIndex);
+                if(array[m].compareTo(array[m-1]) < 0){
+                    if(array[m].compareTo(array[m+1]) < 0){
+                        result = array[m];
+                    }
+                    else{
+                        result = valeyPointRecursive(array, m+1, right);
+                    }
+                }
+                else{
+                    result = valeyPointRecursive(array, left, m-1);
+                }
             }
         }
         return result;
     }
 
     public static void main(String[] args) {
-        ValeyPoint v = new ValeyPoint();
-        System.out.println(v.valeyPoint(new int[]{8,4,2,1,7,12,16,20,32,37}));
+        ValeyPoint<Integer> v = new ValeyPoint<>();
+
+        System.out.println(v.valeyPoint(new Integer[]{4,3,2,7,8,9,16}));
     }
 }
+
